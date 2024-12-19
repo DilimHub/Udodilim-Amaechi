@@ -1,4 +1,3 @@
--- Start coding here
 SELECT product_line,
 CASE WHEN EXTRACT('month' from date) = 6 THEN 'June'
         WHEN EXTRACT('month' from date) = 7 THEN 'July'
