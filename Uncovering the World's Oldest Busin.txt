@@ -1,0 +1,39 @@
+Task 1
+
+SELECT bc.continent, bc.business, bc.year_founded, bc.country
+FROM (
+    SELECT business, year_founded, country, continent
+    FROM businesses
+    JOIN countries USING (country_code)
+) bc
+JOIN (SELECT continent, MIN(year_founded) AS year_founded
+    FROM businesses
+    JOIN countries 
+    USING (country_code)
+    GROUP BY continent
+) c 
+ON bc.continent = c.continent AND bc.year_founded = c.year_founded
+
+Task 2
+
+SELECT c.continent, COUNT(c.country_code) AS countries_without_businesses
+FROM countries c
+LEFT JOIN (
+    SELECT * FROM businesses
+    UNION ALL
+    SELECT * FROM new_businesses
+) b
+ON c.country_code = b.country_code
+WHERE b.business IS NULL
+GROUP BY c.continent;
+
+Task 3
+
+SELECT c.continent,cat.category,MIN(b.year_founded) as year_founded
+FROM businesses as b
+INNER JOIN public.categories as cat
+USING (category_code)
+INNER JOIN public.countries as c
+USING (country_code)
+GROUP BY c.continent,cat.category
+ORDER BY c.continent,cat.category
