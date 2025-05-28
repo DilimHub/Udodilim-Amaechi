@@ -1,0 +1,37 @@
+Factors that Fuel Student Performance
+
+Task 1
+
+SELECT hours_studied, AVG(exam_score) as Avg_exam_score
+FROM student_performance
+WHERE hours_studied > 10
+    AND 
+	   extracurricular_activities = 'Yes'
+GROUP BY hours_studied
+ORDER BY hours_studied
+LIMIT 30;
+
+Task 2
+
+SELECT 
+     CASE
+	     WHEN hours_studied Between 1 AND 5 THEN '1-5 hours'
+		 WHEN hours_studied Between 6 AND 10 THEN '6-10 hours'
+		 WHEN hours_studied Between 11 AND 15 THEN '11-15 hours'
+		 ELSE '16+ hours'
+		 END AS hours_studied_range,
+		 AVG(exam_score) AS avg_exam_score
+FROM student_performance
+GROUP BY hours_studied_range
+ORDER BY avg_exam_score DESC
+
+Task 3
+
+SElECT attendance, 
+       hours_studied,
+	   sleep_hours,
+	   tutoring_sessions,
+	   DENSE_RANK() OVER (ORDER BY Exam_Score DESC) AS exam_rank
+FROM public.student_performance
+ORDER BY exam_rank ASC
+LIMIT 30
