@@ -1,5 +1,3 @@
-Factors that Fuel Student Performance
-
 Task 1
 
 SELECT hours_studied, AVG(exam_score) as Avg_exam_score
